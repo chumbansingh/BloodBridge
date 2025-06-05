@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard - BloodBridge</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <h1>Welcome to Your Dashboard</h1>
+
+  {% if role == 'donor' %}
+  <h2>Donor Information</h2>
+  <form action="/donate" method="POST">
+    <label>Available to donate?</label>
+    <select name="availability">
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+    </select>
+    <button type="submit">Update</button>
+  </form>
+  {% elif role == 'seeker' %}
+  <h2>Find Donors</h2>
+  <form action="/search" method="GET">
+    <input name="blood_group" placeholder="Search Blood Group (e.g. A+)" />
+    <button type="submit">Search</button>
+  </form>
+  <button onclick="getLocation()">Find Nearby Donors</button>
+  <form id="geo-form" action="/nearby" method="POST" style="display:none;">
+    <input type="hidden" name="latitude" id="lat" />
+    <input type="hidden" name="longitude" id="lon" />
+  </form>
+  <script>
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          document.getElementById('lat').value = position.coords.latitude;
+          document.getElementById('lon').value = position.coords.longitude;
+          document.getElementById('geo-form').submit();
+        });
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+    }
+  </script>
+  <div>
+    {% for donor in donors %}
+      <div class="donor-card">
+        <p><strong>Name:</strong> {{ donor.name }}</p>
+        <p><strong>Blood Group:</strong> {{ donor.blood_group }}</p>
+        <p><strong>Location:</strong> {{ donor.location }}</p>
+      </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+</body>
+</html>
