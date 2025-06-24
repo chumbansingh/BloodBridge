@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us | Blood Bridge</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='edit.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <div class="container nav-container">
+      <div class="logo-group">
+        <img src="1logo-removebg-preview.png" alt=Logo" class="logo-img" />
+        <h1 class="logo-text">Blood Bridge</h1>
+      </div>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/donate">Donate</a></li>
+          <li><a href="/request">Request</a></li>
+          <li><a href="/reward">Reward</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact" class="active">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="contact-hero">
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <h2>Contact Us</h2>
+      <p>Have a question or need help? We're here for you 24/7.</p>
+    </div>
+  </section>
+
+  <section class="contact-section">
+    <div class="container contact-container">
+      <form class="contact-form">
+        <h2 class="section-title">Send Us a Message</h2>
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" placeholder="Your Name" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="you@example.com" required />
+        </div>
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" placeholder="Subject of your message" required />
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" rows="5" placeholder="Type your message..." required></textarea>
+        </div>
+        <button type="submit" class="btn">Send Message</button>
+      </form>
+
+      <div class="contact-info">
+        <h2 class="section-title">Reach Us</h2>
+        
+        <p><strong>Phone:</strong> +977 9862510732</p>
+        
+
+        
+        <p><strong>Hours:</strong> Sun-Fri, 9:00 AM – 9:00 PM</p>
+      </div>
+    </div>
+  </section>
+  
+</body>
+</html>

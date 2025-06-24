@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us | Blood Bridge</title>
+ <link rel="stylesheet" href="{{ url_for('static', filename='edit.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="container nav-container">
+      <div class="logo-group">
+       <img src="{{ url_for('static', filename='1logo-removebg-preview.png.png') }}" alt="Logo" class="logo-img">
+<h1 class="logo-text">Blood Bridge</h1>
+      </div>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/donate">Donate</a></li>
+          <li><a href="/request">Request</a></li>
+          <li><a href="/reward">Reward</a></li>
+          <li><a href="/about" class="active">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="about-hero">
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <h2>About Us</h2>
+      <p>Learn more about our mission to save lives through blood donation.</p>
+    </div>
+  </section>
+
+  <section class="about-main">
+    <div class="container about-container">
+      <div class="about-text">
+        <h2>Who We Are</h2>
+        <p>
+          LifeSaver Blood Bank is a nonprofit organization that facilitates safe, easy, and fast access to blood. Our goal is to ensure that no patient dies due to lack of blood.
+        </p>
+        <p>
+          Since our founding, we have worked with hospitals, volunteers, and donors across the country to build a reliable, compassionate network. Every day, our platform helps save lives through donor-patient matching, emergency alerts, and awareness drives.
+        </p>
+        <h3>Our Mission</h3>
+        <p>
+          To foster a culture of voluntary blood donation and make blood accessible and available to every patient in need—on time, every time.
+        </p>
+      </div>
+      <div class="about-image">
+        <img src="Screenshot (141).png" alt="Our mission" />
+      </div>
+    </div>
+  </section>
+  <section class="team">
+  <div class="container">
+    <h2 class="section-title">Meet Our Team</h2>
+    <div class="team-grid">
+      <div class="team-member">
+        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Dr. Sarah Patel" />
+        <h3>Koushiki Karna</h3>
+        
+      </div>
+      <div class="team-member">
+        <img src="https://randomuser.me/api/portraits/men/36.jpg" alt="Raj Verma" />
+        <h3>Chumban Singh</h3>
+        
+      </div>
+      <div class="team-member">
+        <img src="https://randomuser.me/api/portraits/women/52.jpg" alt="Anjali Mehta" />
+        <h3>Prashant Paudel</h3>
+        
+      </div>
+      <div class="team-member">
+        <img src="https://randomuser.me/api/portraits/women/52.jpg" alt="Anjali Mehta" />
+        <h3>Biplov Timalsena</h3>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+ 
+</body>
+</html>
