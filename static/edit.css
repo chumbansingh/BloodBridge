@@ -126,7 +126,7 @@ header {
 /* Features */
 .features {
   padding: 80px 20px;
-  background: #573434;
+  background: #d99999;
   text-align: center;
 }
 
@@ -572,4 +572,133 @@ body.reward-page {
         opacity: 1;
         transform: translateY(0);
     }
+}
+/* Better Styled Benefits Section */
+.benefits {
+  padding: 80px 20px;
+  background: #fff;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px;
+}
+
+.benefit-box {
+  background-color: #f9f9f9;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  text-align: left;
+  transition: transform 0.3s ease;
+}
+
+.benefit-box:hover {
+  transform: translateY(-5px);
+}
+
+.benefit-num {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #2a3cff;
+  margin-bottom: 10px;
+}
+
+.benefit-box h4 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #111;
+}
+
+.benefit-box p {
+  font-size: 0.95rem;
+  color: #444;
+  line-height: 1.6;
+}
+/* Why Blood Bridge Section */
+.why-bloodbridge {
+  background: #ffffff;
+  padding: 80px 20px;
+}
+
+.why-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 50px;
+}
+
+.why-image {
+  flex: 1 1 400px;
+  text-align: center;
+}
+
+.why-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+.why-text {
+  flex: 1 1 500px;
+}
+
+.why-text h2 {
+  font-size: 2.5rem;
+  color: #b71c1c;
+  margin-bottom: 20px;
+}
+
+.why-text p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #444;
+  margin-bottom: 15px;
+}
+/* FAQ Section */
+.faq-section {
+  padding: 100px 20px;
+  background-color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+}
+
+.faq-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 60px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.faq-title {
+  flex: 1 1 300px;
+}
+
+.faq-title h2 {
+  font-size: 3rem;
+  color: #1e1e1e;
+  line-height: 1.2;
+}
+
+.faq-list {
+  flex: 2 1 600px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+}
+
+.faq-item h4 {
+  color: #2a3cff;
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.faq-item p {
+  color: #444;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.logo-link {
+  text-decoration: none;
+  display: inline-block;
 }

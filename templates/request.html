@@ -10,10 +10,12 @@
 <body>
   <header>
     <div class="container nav-container">
+      <a href="/" class="logo-link">
       <div class="logo-group">
-        <img src="1logo-removebg-preview.png" alt="Logo" class="logo-img" />
+        <img src="{{ url_for('static', filename='LOGO.png') }}" alt="logo" class="logo-img" />
         <h1 class="logo-text">Blood Bridge</h1>
       </div>
+      </a>
       <nav>
         <ul class="nav-links">
           <li><a href="/">Home</a></li>

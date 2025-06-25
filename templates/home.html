@@ -10,10 +10,12 @@
 <body>
   <header>
     <div class="container nav-container">
+      <a href="/" class="logo-link">
       <div class="logo-group">
-        <img src="1logo-removebg-preview.png" alt="Logo" class="logo-img" />
+        <img src="{{ url_for('static', filename='LOGO.png') }}" alt="logo" class="logo-img" />
         <h1 class="logo-text">Blood Bridge</h1>
       </div>
+      </a>
       <nav>
         <ul class="nav-links">
           <li><a href="/" class="active">Home</a></li>
@@ -32,9 +34,60 @@
     <div class="hero-content">
       <h2>Donate Blood. Save Lives.</h2>
       <p>Your contribution gives someone a second chance.</p>
-      <a href="#" class="btn">Become a Donor</a>
+      <a href="/donate" class="btn">Become a Donor</a>
     </div>
   </section>
+  <section class="why-bloodbridge">
+  <div class="container why-container">
+    <div class="why-image">
+      <img src="{{ url_for('static', filename='whyus.jpg') }}" alt="Why Blood Bridge">
+    </div>
+    <div class="why-text">
+      <h2>Why Blood Bridge?</h2>
+      <p>In Nepal, the existing blood management system is outdated and inefficient, relying heavily on manual record-keeping and delayed processes.</p>
+      <p><strong>Blood Bridge</strong> is a digital platform designed to revolutionize this system by offering a real-time, smart, and transparent solution from donor registration to hospital coordination.</p>
+      <p>We reduce paperwork, improve emergency response, and ensure availability through verified data and community-driven support.</p>
+      <p>Because in times of crisis, the right information at the right moment can save a life.</p>
+    </div>
+  </div>
+</section>
+<section class="benefits">
+  <div class="container">
+    <h2 class="section-title">Benefits</h2>
+    <div class="benefits-grid">
+      <div class="benefit-box">
+        <div class="benefit-num">01</div>
+        <h4>Quick Blood Access</h4>
+        <p>Immediate access to available blood types in nearby locations to save lives during emergencies.</p>
+      </div>
+      <div class="benefit-box">
+        <div class="benefit-num">02</div>
+        <h4>Donor Registration & Tracking</h4>
+        <p>Easily register as a donor and keep track of donation history with timely reminders.</p>
+      </div>
+      <div class="benefit-box">
+        <div class="benefit-num">03</div>
+        <h4>Hospital Coordination</h4>
+        <p>Streamlined process for hospitals to request and receive blood from verified sources.</p>
+      </div>
+      <div class="benefit-box">
+        <div class="benefit-num">04</div>
+        <h4>Real-time Availability</h4>
+        <p>Check real-time blood availability across multiple locations to avoid delays.</p>
+      </div>
+      <div class="benefit-box">
+        <div class="benefit-num">05</div>
+        <h4>Secure & Verified Donations</h4>
+        <p>All donor data is securely managed and verified to ensure safe and genuine donations.</p>
+      </div>
+      <div class="benefit-box">
+        <div class="benefit-num">06</div>
+        <h4>Community Support System</h4>
+        <p>Join a community of life-savers and participate in blood donation drives and awareness campaigns.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
   <section class="features">
     <div class="container">

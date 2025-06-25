@@ -11,10 +11,12 @@
 <body>
   <header>
     <div class="container nav-container">
+      <a href="/" class="logo-link">
       <div class="logo-group">
-        <img src="1logo-removebg-preview.png" alt=Logo" class="logo-img" />
+        <img src="{{ url_for('static', filename='LOGO.png') }}" alt="logo" class="logo-img" />
         <h1 class="logo-text">Blood Bridge</h1>
       </div>
+      </a>
       <nav>
         <ul class="nav-links">
           <li><a href="/">Home</a></li>
@@ -70,6 +72,43 @@
       </div>
     </div>
   </section>
-  
+  <section class="faq-section">
+  <div class="container faq-container">
+    <div class="faq-title">
+      <h2>Frequently<br>Asked Questions</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <h4>How do I become a donor?</h4>
+        <p>Just register an account and fill out the donor form under the “Donate” section. You’ll be listed for matching in nearby requests.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Is Blood Bridge free to use?</h4>
+        <p>Yes, the platform is completely free for both donors and requesters. Our goal is to build a life-saving community.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Can I track my donations?</h4>
+        <p>Yes! Once registered, your donation history is saved to your profile, and you get reminders when you're eligible to donate again.</p>
+      </div>
+      <div class="faq-item">
+        <h4>How do I request blood?</h4>
+        <p>Click on the “Request” tab, fill out the required details including location and blood type, and submit the request instantly.</p>
+      </div>
+      <div class="faq-item">
+        <h4>How are donors verified?</h4>
+        <p>We verify donors via contact verification and medical history questions to ensure safety and reliability of all donations.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Can hospitals use this platform?</h4>
+        <p>Absolutely! Hospitals can register to directly request and manage blood supplies through our system with real-time access.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<footer>
+    <div class="container">
+      <p>&copy; 2025 LifeSaver Blood Bank. All rights reserved.</p>
+    </div>
+  </footer>
 </body>
 </html>
