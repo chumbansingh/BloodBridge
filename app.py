@@ -42,18 +42,9 @@ def request_blood():
     return render_template('request.html')
 
 # Reward Page
-@app.route('/reward')
+@app.route("/reward")
 def reward():
-    user_id = session.get('user_id')
-    if not user_id:
-        flash("Please log in to view rewards.")
-        return redirect('/login')
-    
-    cursor.execute("SELECT donation_count FROM users WHERE id = %s", (user_id,))
-    user = cursor.fetchone()
-    
-    eligible = user and user['donation_count'] >= 10
-    return render_template('reward.html', eligible=eligible)
+    return render_template("reward.html")
 
 # About Page
 @app.route('/about')

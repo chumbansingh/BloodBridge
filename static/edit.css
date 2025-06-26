@@ -36,6 +36,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: -6mm;
 }
 
 .logo-group {
@@ -45,15 +46,17 @@ header {
 }
 
 .logo-img {
-  width: 120px;
-  height: 120px;
+  width: 130px;
+  height: 130px;
+  margin-left: -10mm;
+  margin-top: 5mm;
 }
 
 .logo-text {
   font-size: 37px;
   font-weight: bold;
-  color: white;
-  margin-left: -10mm;
+  color: rgb(255, 255, 255);
+  margin-left: -8mm;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
@@ -702,3 +705,4 @@ body.reward-page {
   text-decoration: none;
   display: inline-block;
 }
+/*award page*/
