@@ -24,6 +24,8 @@
           <li><a href="/reward">Reward</a></li>
           <li><a href="/about">About</a></li>
           <li><a href="/contact">Contact</a></li>
+          <li><a href="/donors">Donors</a></li>
+          <!-- <li><a href="/admin">admin</a></li> -->
         </ul>
       </nav>
     </div>
@@ -37,7 +39,7 @@
       <a href="/donate" class="btn">Become a Donor</a>
     </div>
   </section>
-  <section class="why-bloodbridge">
+  <class="why-bloodbridge">
   <div class="container why-container">
     <div class="why-image">
       <img src="{{ url_for('static', filename='whyus.jpg') }}" alt="Why Blood Bridge">
@@ -48,6 +50,19 @@
       <p><strong>Blood Bridge</strong> is a digital platform designed to revolutionize this system by offering a real-time, smart, and transparent solution from donor registration to hospital coordination.</p>
       <p>We reduce paperwork, improve emergency response, and ensure availability through verified data and community-driven support.</p>
       <p>Because in times of crisis, the right information at the right moment can save a life.</p>
+    </div>
+  </div>
+  
+<section class="donation-cards">
+  <div class="container card-container">
+    <div class="card">
+      <img src="{{ url_for('static', filename='mm.jpg') }}" alt="Donate Poster 1">  
+    </div>
+    <div class="card">
+      <img src="{{ url_for('static', filename='illustration1.jpg') }}" alt="Donate Poster 2">
+    </div>
+    <div class="card">
+      <img src="{{ url_for('static', filename='i3.jpg') }}" alt="Donate Poster 3">
     </div>
   </div>
 </section>
@@ -88,8 +103,53 @@
     </div>
   </div>
 </section>
+<section class="blood-chart-section">
+  <div class="container">
+    <h2 class="section-title">Blood Compatibility Chart</h2>
+    <p>Understanding blood compatibility is crucial for safe transfusions. Use this chart to know which blood types can donate to and receive from each other.</p>
+  </div>
+<div class="blood-chart-container scroll-animate">
 
-  <section class="features">
+  <h2> Blood Compatibility Chart</h2>
+  <table class="blood-chart">
+    <thead>
+      <tr>
+        <th>Blood Type</th>
+        <th>Can Donate To</th>
+        <th>Can Receive From</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>O−</td><td>All blood types</td><td>O−</td></tr>
+      <tr><td>O+</td><td>O+, A+, B+, AB+</td><td>O−, O+</td></tr>
+      <tr><td>A−</td><td>A−, A+, AB−, AB+</td><td>O−, A−</td></tr>
+      <tr><td>A+</td><td>A+, AB+</td><td>O−, O+, A−, A+</td></tr>
+      <tr><td>B−</td><td>B−, B+, AB−, AB+</td><td>O−, B−</td></tr>
+      <tr><td>B+</td><td>B+, AB+</td><td>O−, O+, B−, B+</td></tr>
+      <tr><td>AB−</td><td>AB−, AB+</td><td>O−, A−, B−, AB−</td></tr>
+      <tr><td>AB+</td><td>AB+</td><td>All blood types</td></tr>
+    </tbody>
+  </table>
+</div>
+</section>
+ <!-- Vein to Vein Section for Blood Bridge -->
+<section class="bb-vein-section">
+  <div class="bb-vein-left">
+    <h1>VEIN TO VEIN</h1>
+    <p>We are digitizing the life cycle of blood donation!</p>
+    <img src="{{ url_for('static', filename='hehe.jpg') }}" alt="Blood Bag">
+  </div>
+  <div class="bb-vein-right">
+    <br><br><br><br><h2>  रगत चाहियो?</h2>
+    <p>
+      Fill out the form and we’ll help you find a donor quickly.<br />
+      Urgent? Call us at <strong>+977 9812345678</strong> or message us on <strong>Facebook</strong>.
+    </p>
+    <a href="/request"><button class="bb-btn bb-btn-primary">Request Blood</button></a>
+    <a href="/donate"><button class="bb-btn bb-btn-secondary">Donate Blood Now</button></a>
+  </div>
+</section>
+<section class="features">
     <div class="container">
       <h2 class="section-title">Our Services</h2>
       <div class="feature-grid">
@@ -109,12 +169,36 @@
     </div>
   </section>
 
+<!-- Footer (without Newsletter box) -->
+<footer class="bb-footer">
+  <div class="bb-footer-col">
+    <p>
+      <br><strong>Blood Bridge</strong> connects donors and recipients across <br> Nepal
+      using real-time data and digital innovation.
+    </p>
+  </div>
+  <div class="bb-footer-col">
+    <h4>Contact Info</h4>
+    <p>Address: Kathmandu, Nepal</p>
+    <p>Phone: +977 9812345678</p>
+    <p>Email: support@bloodbridge.org</p>
+  </div>
+  <div class="bb-footer-col">
+    <h4>Resources</h4>
+    <ul>
+      <li><a href="#">Why Donate Blood?</a></li>
+      <li><a href="#">Find Donors</a></li>
+      <li><a href="#">FAQs</a></li>
+    </ul>
+  </div>
+</footer>
+
   <footer>
     <div class="container">
       <p>&copy; 2025 LifeSaver Blood Bank. All rights reserved.</p>
     </div>
   </footer>
-  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
 
 </body>
 </html>

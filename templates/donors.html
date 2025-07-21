@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blood Bridge - Donors</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='edit.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> <!-- FontAwesome Icons -->
+</head>
+<body class="donors-body">
+  <div class="donors-page">
+    <header>
+      <div class="container donors-nav-container">
+        <a href="/" class="donors-logo-link">
+          <div class="donors-logo-group">
+            <img src="{{ url_for('static', filename='LOGO.png') }}" alt="logo" class="donors-logo-img" />
+            <h1 class="donors-logo-text">Blood Bridge</h1>
+          </div>
+        </a>
+
+        <div class="donors-filters">
+          <select id="bloodFilter" onchange="filterDonors()">
+            <option value="">All Blood Types</option>
+            <option value="A+">A+</option>
+            <option value="B+">B+</option>
+            <option value="O+">O+</option>
+            <option value="AB+">AB+</option>
+            <option value="A-">A-</option>
+            <option value="B-">B-</option>
+            <option value="O-">O-</option>
+            <option value="AB-">AB-</option>
+          </select>
+          <input type="text" id="searchInput" placeholder="Search by name..." onkeyup="searchDonors()">
+        
+        </div>
+      </div>
+      
+    </header>
+
+    <section class="donors-adjust">
+      <main>
+       <!-- Inside <main> -->
+<div class="donors-list" id="donorList">
+  {% for donor in donors %}
+  <div class="donors-card" onclick='showDetails({{ donor | tojson | safe }})'>
+    <div class="donors-avatar">{{ donor.name[0] }}</div>
+    <p><strong>Name:</strong> {{ donor.name }}</p>
+    <p><strong>Blood Type:</strong> <span class="blood-badge">{{ donor.blood_type }}</span></p>
+    <p><strong>Location:</strong> {{ donor.address }}</p>
+  </div>
+  {% endfor %}
+</div>
+      </main>
+    </section>
+
+    <!-- Modal -->
+   <div id="modal" class="donors-modal">
+  <div class="donors-modal-content">
+    <span onclick="closeModal()" class="donors-close">&times;</span>
+
+    <h2>Donor Info</h2>
+    <p><strong>Full Name:</strong> <span id="modalName"></span></p>
+    <p><strong>Email:</strong> <span id="modalEmail"></span></p>
+    <p><strong>Phone:</strong> <span id="modalPhone"></span></p>
+    <p><strong>Blood Group:</strong> <span id="modalBlood"></span></p>
+    <p><strong>Location:</strong> <span id="modalAddress"></span></p>
+
+    <hr style="margin: 12px 0;">
+
+    <h3>Additional Info</h3>
+    <p><strong>Times Donated:</strong> <span id="modalTimes"></span></p>
+  </div>
+</div>
+<section class="blood-stats">
+  <h2>Our Impact So Far</h2>
+  <div class="stats-grid">
+    <div class="stat-box">
+      <h3>1,250+</h3>
+      <p>Registered Donors</p>
+    </div>
+    <div class="stat-box">
+      <h3>980</h3>
+      <p>Successful Donations</p>
+    </div>
+    <div class="stat-box">
+      <h3>65+</h3>
+      <p>Districts Reached</p>
+    </div>
+    <div class="stat-box">
+      <h3>150+</h3>
+      <p>Urgent Requests Fulfilled</p>
+    </div>
+  </div>
+</section>
+
+    <footer class="donors-footer">
+      <div class="container">
+        <p>&copy; 2025 LifeSaver Blood Bank. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

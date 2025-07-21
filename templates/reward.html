@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blood Bridge | Rewards</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='edit.css') }}" />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <div class="container nav-container">
+      <a href="/" class="logo-link">
+      <div class="logo-group">
+        <img src="{{ url_for('static', filename='LOGO.png') }}" alt="logo" class="logo-img" />
+        <h1 class="logo-text">Blood Bridge</h1>
+      </div>
+      </a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/donate">Donate</a></li>
+          <li><a href="/request">Request</a></li>
+          <li><a href="/reward" class="active" >Reward</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/donors">Donors</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+
+  <!--  Reward Section -->
+  <section class="reward-container">
+    <div class="reward-card">
+      <h1>🎉 Congratulations!</h1>
+      <p>You’re on your way to something amazing.</p>
+      <div class="donation-status">
+        <p><strong>10 Donations = FREE Body Checkup</strong></p>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: 80%;">8/10</div>
+        </div>
+      </div>
+      <p class="small-text">Keep donating and help save lives. Once you hit 10 donations, you’ll receive a coupon for a full-body health checkup from our partner hospital.</p>
+      <a href="/donate" class="btn">Donate Page</a>
+    </div>
+  </section>
+
+  
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

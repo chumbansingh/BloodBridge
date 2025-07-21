@@ -24,6 +24,7 @@
           <li><a href="/reward">Reward</a></li>
           <li><a href="/about" class="active">About</a></li>
           <li><a href="/contact">Contact</a></li>
+          <li><a href="/donors">Donors</a></li>
         </ul>
       </nav>
     </div>
@@ -53,7 +54,7 @@
         </p>
       </div>
       <div class="about-image">
-        <img src="{{ url_for('static', filename='Screenshot (141).png') }}" alt="our mission" />
+        <img src="{{ url_for('static', filename='b3.webp') }}" alt="our mission" />
       </div>
     </div>
   </section>
@@ -62,22 +63,22 @@
     <h2 class="section-title">Meet Our Team</h2>
     <div class="team-grid">
       <div class="team-member">
-        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Dr. Sarah Patel" />
+        <img src="{{ url_for('static', filename='k.png') }}" alt="Koushiki Karna" />
         <h3>Koushiki Karna</h3>
         
       </div>
       <div class="team-member">
-        <img src="https://randomuser.me/api/portraits/men/36.jpg" alt="Raj Verma" />
+        <img src="{{ url_for('static', filename='c.png') }}" alt="Chumban Singh" />
         <h3>Chumban Singh</h3>
         
       </div>
       <div class="team-member">
-        <img src="https://randomuser.me/api/portraits/women/52.jpg" alt="Anjali Mehta" />
+        <img src="{{ url_for('static', filename='moye.png') }}" alt="Prashant Paudel" />
         <h3>Prashant Paudel</h3>
         
       </div>
       <div class="team-member">
-        <img src="https://randomuser.me/api/portraits/women/52.jpg" alt="Anjali Mehta" />
+        <img src="{{ url_for('static', filename='gandu.png') }}" alt="biplob" />
         <h3>Biplov Timalsena</h3>
         
       </div>
@@ -85,6 +86,6 @@
   </div>
 </section>
 
- 
+ <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

@@ -1,0 +1,211 @@
+from flask import Flask, render_template, request, redirect, session, flash
+import mysql.connector
+from geopy.distance import geodesic
+
+app = Flask(__name__)
+app.secret_key = 'supersecretkey'
+
+# MySQL connection
+conn = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="sql@2005NOV",
+    database="bloodbridge"
+)
+cursor = conn.cursor(dictionary=True)
+
+# Home Page
+@app.route('/')
+def home():
+    return render_template('home.html')
+
+# Donate Page
+"""@app.route('/donate', methods=['GET', 'POST'])
+def donate():
+    if request.method == 'POST':
+        availability = request.form.get('availability')
+        user_id = session.get('user_id')
+        cursor.execute("UPDATE users SET availability=%s WHERE id=%s", (availability, user_id))
+        conn.commit()
+        flash("Donation status updated!", "success")
+        return redirect('/')
+    return render_template('donate.html')"""""
+# Blood Request Page
+@app.route('/request', methods=['GET', 'POST'])
+def request_blood():
+    if request.method == 'POST':
+        blood_group = request.form.get('blood_group')
+        cursor.execute("SELECT name, blood_group, location FROM users WHERE role='donor' AND availability='yes' AND blood_group=%s", (blood_group,))
+        donors = cursor.fetchall()
+        return render_template('request.html', donors=donors)
+    return render_template('request.html')
+
+# Reward Page
+@app.route("/reward")
+def reward():
+    return render_template("reward.html")
+
+# About Page
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+# Contact Page
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
+# Donor List Page
+@app.route('/donors')
+def donor_list():
+    donors = [
+        {
+            "name": "Aman Singh",
+            "email": "aman.singh@example.com",
+            "address": "Kathmandu",
+            "blood_type": "A+",
+            "phone": "9812345678",
+            "age": 25,
+            "times_donated": 5
+        },
+        {
+            "name": "Sita Rai",
+            "email": "sita.rai@example.com",
+            "address": "Lalitpur",
+            "blood_type": "O-",
+            "phone": "9800000001",
+            "age": 30,
+            "times_donated": 2
+        },
+        {
+            "name": "Raj Basnet",
+            "email": "raj.basnet@example.com",
+            "address": "Bhaktapur",
+            "blood_type": "B+",
+            "phone": "9812345679",
+            "age": 28,
+            "times_donated": 3
+        },
+        {
+            "name": "Nina Adhikari",
+            "email": "nina.ad@example.com",
+            "address": "Pokhara",
+            "blood_type": "AB-",
+            "phone": "9800000002",
+            "age": 22,
+            "times_donated": 4
+        },
+        {
+            "name": "Ramesh Thapa",
+            "email": "ramesh.t@example.com",
+            "address": "Biratnagar",
+            "blood_type": "O+",
+            "phone": "9812345680",
+            "age": 35,
+            "times_donated": 6
+        },
+        {
+            "name": "Gita KC",
+            "email": "gita.kc@example.com",
+            "address": "Nepalgunj",
+            "blood_type": "A-",
+            "phone": "9800000003",
+            "age": 27,
+            "times_donated": 1
+        },
+        {
+            "name": "Hari Lama",
+            "email": "hari.lama@example.com",
+            "address": "Butwal",
+            "blood_type": "B-",
+            "phone": "9812345681",
+            "age": 32,
+            "times_donated": 2
+        }
+    ]
+    return render_template("donors.html", donors=donors)
+
+
+# --- Get All Pending Donors ---
+def get_pending_donors():
+    cursor.execute('SELECT * FROM donors WHERE status = %s', ("pending",))
+    return cursor.fetchall()
+
+# --- Update Status (approve/reject) ---
+def update_status(donor_id, new_status):
+    cursor.execute('UPDATE donors SET status = %s WHERE id = %s', (new_status, donor_id))
+    conn.commit()
+
+# --- Admin Panel Route ---
+@app.route("/admin")
+def admin_panel():
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM donors WHERE status = 'pending'")
+    pending_donors = cursor.fetchall()
+    cursor.close()
+    return render_template("admin.html", pending_donors=pending_donors)
+
+# --- Approve Donor ---
+@app.route("/approve/<int:id>", methods=["POST"])
+def approve_donor(id):
+    update_status(id, "approved")
+    return redirect("/admin")
+
+@app.route("/donate", methods=["GET", "POST"])
+def donate():
+    if request.method == "POST":
+        name = request.form["name"]
+        email = request.form["email"]
+        address = request.form["address"]
+        blood_type = request.form["blood_type"]
+        phone = request.form["phone"]
+        age = request.form["age"]
+
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO donors (name, email, address, blood_type, phone, age, times_donated, status)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        """, (name, email, address, blood_type, phone, age, 0, 'pending'))
+        conn.commit()
+        cursor.close()
+
+        return render_template("thankyou.html")  # or redirect to thank you page
+
+    return render_template("donate.html")
+
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blood Bridge</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='edit.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <h2 class="results-heading">Matching Donors</h2>
+
+    {% if donors %}
+        {% for donor in donors %}
+            <div class="donor-card">
+                <h3>{{ donor.name }}</h3>
+                <p><strong>Blood Type:</strong> {{ donor.blood_type }}</p>
+                <p><strong>Address:</strong> {{ donor.address }}</p>
+                <p><strong>Phone:</strong> {{ donor.phone }}</p>
+                <p><strong>Age:</strong> {{ donor.age }}</p>
+                <p><strong>Times Donated:</strong> {{ donor.times_donated }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="no-results">No matching donors found.</div>
+    {% endif %}
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='edit.css') }}">
+</head>
+<body class="admin-login-page">
+    <div class="login-box">
+        <h2>Admin Login</h2>
+        <form method="POST">
+            <input type="text" name="username" placeholder="Username" required><br>
+            <input type="password" name="password" placeholder="Password" required><br>
+            <button type="submit">Login</button>       
+        </form>
+        <!-- Back to home link -->
+        <div class="back-home">
+            <a href="{{ url_for('home') }}">← Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>
