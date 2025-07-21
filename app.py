@@ -5,6 +5,14 @@ app.secret_key = 'supersecretkey'
 
 ADMIN_USERNAME = 'admin'
 ADMIN_PASSWORD = 'pass123'
+# MySQL connection
+conn = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="sql@2005NOV",
+    database="bloodbridge"
+)
+cursor = conn.cursor(dictionary=True)
 # 4.Admin Login Route
 @app.route('/admin-login', methods=['GET', 'POST'])
 def admin_login():
@@ -19,15 +27,6 @@ def admin_login():
             flash('Invalid credentials!', 'danger')
     
     return render_template('admin_login.html')
-
-# MySQL connection
-conn = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="sql@2005NOV",
-    database="bloodbridge"
-)
-cursor = conn.cursor(dictionary=True)
 
 # Home Page
 @app.route('/')
@@ -66,7 +65,6 @@ def request_blood():
         )
         donors = cursor.fetchall()
 
-        # You can also access patient_name, urgency, contact if needed:
         patient_name = request.form['patient_name']
         urgency = request.form['urgency']
         contact = request.form['contact']
@@ -98,7 +96,7 @@ def contact():
         
     return render_template('contact.html')
 
-# Donor List Page (Approved Donors Only)
+# Donor List Page (Approved wala Donors matra)
 @app.route('/donors')
 def donor_list():
     cursor.execute("SELECT * FROM donors WHERE status='approved'")
