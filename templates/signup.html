@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BloodBridge - Signup</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='edit.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }}" role="alert">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+  <div class="bbx-signup-wrapper">
+    <div class="bbx-signup-box">
+      <h2>Create Your BloodBridge Account</h2>
+      <form action="/signup" method="POST" onsubmit="return validateForm()">
+  <input type="text" name="username" id="username" placeholder="Full Name" class="bbx-input" required>
+  <input type="email" name="email" id="email" placeholder="Email" class="bbx-input" required>
+  <input type="password" name="password" id="password" placeholder="Password" class="bbx-input" required>
+  <input type="text" name="phone" id="phone" placeholder="Phone Number" class="bbx-input" required>
+  <button type="submit" class="bbx-btn">Sign Up</button>
+</form>
+
+<p id="error-message" style="color:red; font-weight:bold; margin-top:10px;"></p>
+      <p class="bbx-text">Already have an account? <a href="{{ url_for('login') }}" class="bbx-link">Login</a></p>
+    </div>
+  </div>
+   <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

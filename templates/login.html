@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BloodBridge - Login</title>
+   <link rel="stylesheet" href="{{ url_for('static', filename='edit.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }}" role="alert">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+  <div class="bby-login-wrapper">
+    <div class="bby-login-box">
+      <h2>Login to BloodBridge</h2>
+      <form action="/login" method="POST" onsubmit="return validateLogin()">
+  <input type="email" name="email" id="login-email" placeholder="Email" class="bby-input" required>
+  <input type="password" name="password" id="login-password" placeholder="Password" class="bby-input" required>
+  <button type="submit" class="bby-btn">Login</button>
+</form>
+
+<p id="login-error" style="color:red; font-weight:bold; margin-top:10px;"></p>
+      <p class="bby-text">Don’t have an account? <a href="{{ url_for('signup') }}" class="bby-link">Sign Up</a></p>
+    </div>
+  </div>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

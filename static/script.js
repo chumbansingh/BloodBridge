@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // Eligibility checker (Future scope idea)
-  // Example use-case: show a message if user donated < 3 months ago
+
   const eligibility = localStorage.getItem('lastDonationDate');
   if (eligibility) {
     const lastDonation = new Date(eligibility);
@@ -102,7 +102,6 @@ function searchDonors() {
     card.style.display = name.includes(search) ? "block" : "none";
   });
 }
-<!--  Mobile Nav Toggle Script -->
   
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.querySelector('.nav-links');
@@ -124,4 +123,92 @@ function searchDonors() {
     const animatedElements = document.querySelectorAll('.scroll-animate');
     animatedElements.forEach(el => observer.observe(el));
   });
+  
+//training my signup/in form
+function validateForm() {
+  const name = document.getElementById("username").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const errorMsg = document.getElementById("error-message");
 
+  // ✅ 1. Name validation (only letters & spaces)
+  const nameRegex = /^[A-Za-z\s]+$/;
+  if (!nameRegex.test(name)) {
+    errorMsg.textContent = "Name can only contain alphabets and spaces.";
+    return false;
+  }
+
+  // ✅ 2. Email validation
+const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+  if (!emailRegex.test(email)) {
+    errorMsg.textContent = "Enter a valid email (example@gmail.com).";
+    return false;
+  }
+
+  // ✅ 3. Password validation (min 8 chars, 1 uppercase, 1 special, 1 digit)
+  const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+  if (!passwordRegex.test(password)) {
+    errorMsg.textContent = "Password must be 8+ chars, include 1 uppercase, 1 number, and 1 special character.";
+    return false;
+  }
+
+  // ✅ 4. Phone validation (10 digits only)
+  const phoneRegex = /^[0-9]{10}$/;
+  if (!phoneRegex.test(phone)) {
+    errorMsg.textContent = "Phone number must be exactly 10 digits.";
+    return false;
+  }
+
+  // ✅ All good
+  errorMsg.textContent = "";
+  return true;
+}
+
+function validateLogin() {
+  const email = document.getElementById("login-email").value.trim();
+  const password = document.getElementById("login-password").value.trim();
+  const errorMsg = document.getElementById("login-error");
+
+  // ✅ 1. Validate email format
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+  if (!emailRegex.test(email)) {
+    errorMsg.textContent = "Enter a valid email (example@gmail.com).";
+    return false;
+  }
+
+  // ✅ 2. Validate password format (same rule as signup)
+  const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+  if (!passwordRegex.test(password)) {
+    errorMsg.textContent = "Password must have 8+ chars, 1 uppercase, 1 number, and 1 special character.";
+    return false;
+  }
+
+  // ✅ All good
+  errorMsg.textContent = "";
+  return true;
+}
+    // --- Modal handling ---
+    function showDetails(donor) {
+      document.getElementById("modal").style.display = "flex";
+      document.getElementById("modalName").textContent = donor.name;
+      document.getElementById("modalEmail").textContent = donor.email;
+      document.getElementById("modalPhone").textContent = donor.phone;
+      document.getElementById("modalBlood").textContent = donor.blood_type;
+      document.getElementById("modalAddress").textContent = donor.address;
+      document.getElementById("modalTimes").textContent = donor.times_donated || 0;
+
+      // Set form action dynamically
+      const form = document.getElementById("requestForm");
+      form.action = `/request_blood/${donor.user_id}`;
+    }
+
+    function closeModal() {
+      document.getElementById("modal").style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      if (event.target === document.getElementById("modal")) {
+        closeModal();
+      }
+    };

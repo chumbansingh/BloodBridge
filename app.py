@@ -1,5 +1,5 @@
-from flask import Flask, render_template, request, redirect, session, flash
-import mysql.connector
+from flask import Flask, render_template, request, redirect, session, flash , url_for 
+import mysql.connector ,random, string , re 
 app = Flask(__name__)
 app.secret_key = 'supersecretkey'
 
@@ -28,6 +28,109 @@ def admin_login():
     
     return render_template('admin_login.html')
 
+# login/signup
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        email = request.form["email"].strip()
+        password = request.form["password"].strip()
+
+        # ✅ Backend validation
+        if not re.match(r'^[a-zA-Z0-9._%+-]+@gmail\.com$', email):
+            flash("Only valid Gmail addresses are allowed (e.g., yourname@gmail.com).", "danger")
+            return redirect(url_for("login"))
+
+        if not re.match(r"^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$", password):
+            flash("Password format invalid.", "danger")
+            return redirect(url_for("login"))
+
+        # ✅ Check credentials (changed usersignup → users)
+        cursor.execute("SELECT * FROM users WHERE email = %s AND password = %s", (email, password))
+        user = cursor.fetchone()
+
+        if user:
+            session["user_id"] = user["user_id"]
+            session["user_name"] = user["name"]
+            flash("Login successful!", "success")
+            return redirect(url_for("homee"))  # or your home page route
+        else:
+            flash("Invalid Gmail or Password!", "danger")
+            return redirect(url_for("login"))
+
+    return render_template("login.html")
+@app.route("/homee")
+def homee():
+    # Ensure user is logged in
+    if "user_id" not in session:
+        flash("Please log in to continue.", "warning")
+        return redirect(url_for("login"))
+
+    # Pass user data to the template
+    return render_template(
+        "homee.html",
+        user_name=session.get("user_name"),
+        user_id=session.get("user_id")
+    )
+
+# --- Function to generate user ID ---
+def generate_user_id():
+    cursor.execute("SELECT COUNT(*) FROM users")
+    result = cursor.fetchone()
+    
+    # handle empty table or dict-style cursor
+    if result is None:
+        count = 0
+    elif isinstance(result, dict):
+        count = list(result.values())[0]
+    else:
+        count = result[0]
+        
+    return f"BB{count + 1:05d}"
+
+# ✅ SIGNUP ROUTE
+@app.route("/signup", methods=["GET", "POST"])
+def signup():
+    if request.method == "POST":
+        name = request.form["username"].strip()
+        email = request.form["email"].strip()
+        password = request.form["password"].strip()
+        phone = request.form["phone"].strip()
+
+        # 🔹 Validation checks
+        if not re.match(r"^[A-Za-z\s]+$", name):
+            flash("Invalid name: only letters and spaces allowed.", "danger")
+            return redirect(url_for("signup"))
+
+        if not re.match(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", email):
+            flash("Invalid email format.", "danger")
+            return redirect(url_for("signup"))
+
+        if not re.match(r"^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$", password):
+            flash("Password must be 8+ chars, 1 uppercase, 1 number, and 1 special character.", "danger")
+            return redirect(url_for("signup"))
+
+        if not re.match(r"^[0-9]{10}$", phone):
+            flash("Phone number must be 10 digits.", "danger")
+            return redirect(url_for("signup"))
+
+        # 🔹 Check if email already exists
+        cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
+        if cursor.fetchone():
+            flash("This Gmail is already registered.", "danger")
+            return redirect(url_for("signup"))
+
+        # 🔹 Insert user
+        user_id = generate_user_id()
+        cursor.execute(
+            "INSERT INTO users (user_id, name, email, password, phone) VALUES (%s, %s, %s, %s, %s)",
+            (user_id, name, email, password, phone)
+        )
+        conn.commit()
+
+        # ✅ After successful signup, render thank-you page
+        return render_template("signupsuccessfull.html", user_id=user_id, name=name)
+
+    return render_template("signup.html")
 # Home Page
 @app.route('/')
 def home():
@@ -135,6 +238,7 @@ def reject_donor(id):
     cursor.execute("UPDATE donors SET status='rejected' WHERE id=%s", (id,))
     conn.commit()
     return redirect("/admin")
+
 
 
 if __name__ == '__main__':

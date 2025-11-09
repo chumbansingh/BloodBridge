@@ -21,7 +21,6 @@
           <li><a href="/">Home</a></li>
           <li><a href="/donate" class="active">Donate</a></li>
           <li><a href="/request">Request</a></li>
-          <li><a href="/reward">Reward</a></li>
           <li><a href="/about">About</a></li>
           <li><a href="/contact">Contact</a></li>
           <li><a href="/donors">Donors</a></li>
@@ -44,17 +43,22 @@
       <form method="POST" action="/donate" class="donor-form">
   <div class="form-group">
     <label for="name">Full Name</label>
-    <input type="text" id="name" name="name" placeholder="Your Name(नाम)" required />
+    <input type="text" id="name" name="name" pattern="[A-Za-z\s]+" title="Name should only contain letters" placeholder="Your Name(नाम)" required />
   </div>
 
-  <div class="form-group">
+ <div class="form-group">
     <label for="email">Email Address</label>
-    <input type="email" id="email" name="email" placeholder="yourname@gmail.com" required />
-  </div>
+    <input type="email" id="email" name="email" 
+           pattern="[a-zA-Z0-9._%+-]+@gmail\.com$"
+           title="Please enter a valid Gmail address (e.g., yourname@gmail.com)" 
+           placeholder="yourname@gmail.com" 
+           required />
+</div>
 
   <div class="form-group">
     <label for="phone">Phone Number</label>
-    <input type="tel" id="phone" name="phone" placeholder="+977 .........(फोन)." required />
+    <input type="tel" id="phone" name="phone" pattern="[0-9]{10}"
+         title="Phone number must be 10 digits" placeholder="+977 .........(फोन)." required />
   </div>
 
   <div class="form-group">
@@ -74,12 +78,93 @@
 
   <div class="form-group">
     <label for="location">City / Location</label>
-    <input type="text" id="location" name="address" placeholder="Address" required />
+    <!-- <input type="text" id="location" name="address" placeholder="Address" required /> -->
+<select name="address" required>
+  <option value="">--Select District--</option>
+  <option value="Achham">Achham</option>
+  <option value="Arghakhanchi">Arghakhanchi</option>
+  <option value="Baglung">Baglung</option>
+  <option value="Baitadi">Baitadi</option>
+  <option value="Biratnagar">Biratnagar</option>
+  <option value="Bajhang">Bajhang</option>
+  <option value="Bajura">Bajura</option>
+  <option value="Banke">Banke</option>
+  <option value="Bara">Bara</option>
+  <option value="Bardiya">Bardiya</option>
+  <option value="Bhaktapur">Bhaktapur</option>
+  <option value="Bhojpur">Bhojpur</option>
+  <option value="Chitwan">Chitwan</option>
+  <option value="Dadeldhura">Dadeldhura</option>
+  <option value="Dailekh">Dailekh</option>
+  <option value="Dang">Dang</option>
+  <option value="Darchula">Darchula</option>
+  <option value="Dhading">Dhading</option>
+  <option value="Dhankuta">Dhankuta</option>
+  <option value="Dhanusha">Dhanusha</option>
+  <option value="Dolakha">Dolakha</option>
+  <option value="Dolpa">Dolpa</option>
+  <option value="Doti">Doti</option>
+  <option value="Eastern Rukum">Eastern Rukum</option>
+  <option value="Gorkha">Gorkha</option>
+  <option value="Gulmi">Gulmi</option>
+  <option value="Humla">Humla</option>
+  <option value="Ilam">Ilam</option>
+  <option value="Jajarkot">Jajarkot</option>
+  <option value="Jhapa">Jhapa</option>
+  <option value="Jumla">Jumla</option>
+  <option value="Kailali">Kailali</option>
+  <option value="Kalikot">Kalikot</option>
+  <option value="Kanchanpur">Kanchanpur</option>
+  <option value="Kapilvastu">Kapilvastu</option>
+  <option value="Kaski">Kaski</option>
+  <option value="Kathmandu">Kathmandu</option>
+  <option value="Kavrepalanchok">Kavrepalanchok</option>
+  <option value="Khotang">Khotang</option>
+  <option value="Lalitpur">Lalitpur</option>
+  <option value="Lamjung">Lamjung</option>
+  <option value="Mahottari">Mahottari</option>
+  <option value="Makwanpur">Makwanpur</option>
+  <option value="Manang">Manang</option>
+  <option value="Morang">Morang</option>
+  <option value="Mugu">Mugu</option>
+  <option value="Mustang">Mustang</option>
+  <option value="Myagdi">Myagdi</option>
+  <option value="Nawalpur">Nawalpur</option>
+  <option value="Nuwakot">Nuwakot</option>
+  <option value="Okhaldhunga">Okhaldhunga</option>
+  <option value="Palpa">Palpa</option>
+  <option value="Panchthar">Panchthar</option>
+  <option value="Parasi">Parasi</option>
+  <option value="Parbat">Parbat</option>
+  <option value="Parsa">Parsa</option>
+  <option value="Pyuthan">Pyuthan</option>
+  <option value="Ramechhap">Ramechhap</option>
+  <option value="Rasuwa">Rasuwa</option>
+  <option value="Rautahat">Rautahat</option>
+  <option value="Rolpa">Rolpa</option>
+  <option value="Rupandehi">Rupandehi</option>
+  <option value="Salyan">Salyan</option>
+  <option value="Sankhuwasabha">Sankhuwasabha</option>
+  <option value="Saptari">Saptari</option>
+  <option value="Sarlahi">Sarlahi</option>
+  <option value="Sindhuli">Sindhuli</option>
+  <option value="Sindhupalchok">Sindhupalchok</option>
+  <option value="Siraha">Siraha</option>
+  <option value="Solukhumbu">Solukhumbu</option>
+  <option value="Sunsari">Sunsari</option>
+  <option value="Surkhet">Surkhet</option>
+  <option value="Syangja">Syangja</option>
+  <option value="Tanahun">Tanahun</option>
+  <option value="Taplejung">Taplejung</option>
+  <option value="Terhathum">Terhathum</option>
+  <option value="Udayapur">Udayapur</option>
+  <option value="Western Rukum">Western Rukum</option>
+</select>
   </div>
 
   <div class="form-group">
     <label for="age">Age</label>
-    <input type="number" id="age" name="age" placeholder="Your Age" required />
+    <input type="number" id="age" name="age" min="18" max="60" placeholder="Your Age" required />
   </div>
 
   <button type="submit" class="btn">Register Now</button>

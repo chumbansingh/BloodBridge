@@ -24,21 +24,23 @@
           <li><a href="/about">About</a></li>
           <li><a href="/contact">Contact</a></li>
           <li><a href="/donors">Donors</a></li>
-          <li><a href="/login">sign in</a></li>
-          <li><a href="/signup">sign up</a></li>
-          <!-- <li><a href="/admin">admin</a></li> -->
         </ul>
       </nav>
     </div>
   </header>
-
   <section class="hero">
     <div class="overlay"></div>
     <div class="hero-content">
+        <section class="welcome-banner">
+    <div class="banner-content">
+      <h1>Welcome to Blood Bridge, <span>{{ user_name }}</span>!</h1>
+      <p>Your User ID: <strong>{{ user_id }}</strong></p>
+      <p class="tagline">Together, we bridge lives through the power of giving ❤️</p>
+    </div>
+  </section>
       <h2>Donate Blood. Save Lives.</h2>
       <p>Your contribution gives someone a second chance.</p>
       <a href="/donate" class="btn">Become a Donor</a>
-      <a href="/login" class="btn">Sign In</a>
     </div>
   </section>
   <class="why-bloodbridge">

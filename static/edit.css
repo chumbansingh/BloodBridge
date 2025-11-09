@@ -48,7 +48,7 @@ header {
 .logo-img {
   width: 130px;
   height: 130px;
-  margin-left: -10mm;
+  margin-left: -45mm;
   margin-top: 5mm;
 }
 
@@ -64,6 +64,7 @@ header {
   list-style: none;
   display: flex;
   gap: 25px;
+  margin-right: -25mm;
 }
 
 .nav-links li a {
@@ -1460,4 +1461,140 @@ body.admin-login-page {
   text-decoration: none;
 }
 
+/*login css*/
+.bby-login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #f8f8f8;
+}
 
+.bby-login-box {
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  width: 350px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.bby-login-box h2 {
+  color: #b30000;
+  margin-bottom: 20px;
+}
+
+.bby-input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.bby-btn {
+  width: 100%;
+  padding: 10px;
+  background: #b30000;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.bby-btn:hover {
+  background: #a00000;
+}
+
+.bby-text {
+  margin-top: 15px;
+}
+
+.bby-link {
+  color: #b30000;
+  text-decoration: none;
+}
+.bby-link:hover {
+  text-decoration: underline;
+}
+/*signup*/
+.bbx-signup-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #fffaf9;
+}
+
+.bbx-signup-box {
+  background: #fff;
+  padding: 35px;
+  border-radius: 15px;
+  width: 370px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.bbx-signup-box h2 {
+  color: #b30000;
+  margin-bottom: 20px;
+}
+
+.bbx-input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.bbx-btn {
+  width: 100%;
+  padding: 10px;
+  background: #b30000;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.bbx-btn:hover {
+  background: #a00000;
+}
+
+.bbx-text {
+  margin-top: 15px;
+}
+
+.bbx-link {
+  color: #b30000;
+  text-decoration: none;
+}
+.bbx-link:hover {
+  text-decoration: underline;
+}
+/* WELCOME BANNER */
+.welcome-banner {
+  color: white;
+  text-align: center;
+  padding: 30px 20px;
+}
+
+.banner-content h1 {
+  font-size: 2em;
+  margin: 0;
+  margin-top: 30px;
+}
+
+.banner-content span {
+  color: #ffdfdf;
+  font-weight: bold;
+}
+
+.banner-content .tagline {
+  font-size: 1.1em;
+  margin-top: 10px;
+  color: #ffeaea;
+}
