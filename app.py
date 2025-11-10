@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, session, flash , url_for 
+
 import mysql.connector ,random, string , re 
 app = Flask(__name__)
 app.secret_key = 'supersecretkey'
@@ -136,50 +137,80 @@ def signup():
 def home():
     return render_template('home.html')
 
+
 # Donate Page
 @app.route("/donate", methods=["GET", "POST"])
 def donate():
     if request.method == "POST":
-        name = request.form["name"]
-        email = request.form["email"]
-        address = request.form["address"]
-        blood_type = request.form["blood_type"]
-        phone = request.form["phone"]
-        age = request.form["age"]
+        user_id = request.form["user_id"].strip()
+        email = request.form["email"].strip()
+        name = request.form["name"].strip()
+        address = request.form["address"].strip()
+        blood_type = request.form["blood_type"].strip()
+        phone = request.form["phone"].strip()
+        age = request.form["age"].strip()
 
+        # ✅ Step 1: Verify if user_id and email exist together in users table
+        cursor.execute("SELECT * FROM users WHERE user_id = %s AND email = %s", (user_id, email))
+        user = cursor.fetchone()
+
+        if not user:
+            #flash("❌ Invalid User ID or Email! Please use your registered credentials.", "danger")
+            return render_template("invalid.html")
+
+
+        # ✅ Step 2: Check for duplicate donation
+        cursor.execute("SELECT * FROM donors WHERE user_id = %s", (user_id,))
+        if cursor.fetchone():
+            #flash("⚠️ You’ve already submitted a donation request! Please wait for admin approval.", "warning")
+            return render_template("duplicate.html")
+
+
+        # ✅ Step 3: Insert donor info
         cursor.execute("""
-            INSERT INTO donors (name, email, address, blood_type, phone, age, times_donated, status)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-        """, (name, email, address, blood_type, phone, age, 0, 'pending'))
+            INSERT INTO donors (user_id, name, email, address, blood_type, phone, age, times_donated, status)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+        """, (user_id, name, email, address, blood_type, phone, age, 0, "pending"))
         conn.commit()
-        return render_template("thankyou.html")
+
+        # ✅ Step 4: Redirect to a nice thank-you page
+        return render_template("thankyou.html", email=email, user_id=user_id)
 
     return render_template("donate.html")
-
+#request Blood Page
 @app.route('/request', methods=['GET', 'POST'])
 def request_blood():
     if request.method == 'POST':
+        user_id = request.form['user_id']
+        email = request.form['email']
         blood_type = request.form['blood_type']
         location = request.form['location']
-
-        cursor.execute(
-            "SELECT * FROM donors WHERE blood_type = %s AND address LIKE %s AND status = 'approved'",
-            (blood_type, f"%{location}%")
-        )
-        donors = cursor.fetchall()
-
         patient_name = request.form['patient_name']
         urgency = request.form['urgency']
         contact = request.form['contact']
 
+        # ✅ Verify user ID and email
+        cursor.execute("SELECT * FROM users WHERE user_id = %s AND email = %s", (user_id, email))
+        user = cursor.fetchone()
+
+        if not user:
+            #flash("❌ Invalid User ID or Email mismatch. Please use your registered account.", "danger")
+            return render_template("notuser.html")
+
+
+        # ✅ Search matching donors
+        cursor.execute("""
+            SELECT * FROM donors
+            WHERE blood_type = %s
+            AND address LIKE %s
+            AND status = 'approved'
+        """, (blood_type, f"%{location}%"))
+        donors = cursor.fetchall()
+
+        #flash("✅ Your request has been submitted successfully.", "success")
         return render_template("results.html", donors=donors, blood_type=blood_type, location=location)
 
     return render_template("request.html")
-# Reward Page
-@app.route("/reward")
-def reward():
-    return render_template("reward.html")
-
 # About Page
 @app.route('/about')
 def about():

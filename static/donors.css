@@ -20,6 +20,10 @@ body.donors-body {
   align-items: center;
   margin-left: -14mm;
 }
+.donors-logo-link {
+  text-decoration: none;   /* removes underline */
+  color: inherit;           /* keeps text color same as parent */
+}
 .donors-logo-img {
   width: 100px;
   height: 100px;

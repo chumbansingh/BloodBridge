@@ -59,7 +59,6 @@
       <th>Name</th>
       <th>Email</th>
       <th>Message</th>
-      <th>Received At</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -69,7 +68,6 @@
       <td>{{ msg.name }}</td>
       <td>{{ msg.email }}</td>
       <td>{{ msg.message }}</td>
-      <td>{{ msg.created_at }}</td>
       <td>
         <!-- Reply Button -->
         <a href="mailto:{{ msg.email }}?subject=Reply from BloodBridge Admin" class="btn-approve">Reply</a>

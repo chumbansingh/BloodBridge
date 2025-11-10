@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Invalid Credentials</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root {
+      --bg: #f5f6f8;
+      --card: #ffffff;
+      --danger: #d9534f;
+      --text: #333333;
+      --muted: #666666;
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      background: linear-gradient(180deg, var(--bg), #eef1f5);
+      padding: 24px;
+    }
+
+    .box {
+      background: var(--card);
+      width: 100%;
+      max-width: 520px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(20, 30, 50, 0.08);
+      padding: 36px;
+      text-align: center;
+      animation: appear .45s ease;
+    }
+
+    .icon {
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, rgba(217,83,79,0.12), rgba(217,83,79,0.06));
+      color: var(--danger);
+      font-size: 36px;
+      margin-bottom: 14px;
+      box-shadow: 0 6px 18px rgba(217,83,79,0.08);
+    }
+
+    h1 {
+      margin: 0 0 8px 0;
+      font-size: 22px;
+      color: var(--danger);
+    }
+
+    p.message {
+      margin: 6px 0 18px;
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .actions {
+      margin-top: 22px;
+      display:flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: 0;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: #e85b58;
+      color: #fff;
+      box-shadow: 0 6px 18px rgba(232,91,88,0.12);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--danger);
+      border: 1px solid rgba(217,83,79,0.12);
+    }
+
+    @keyframes appear {
+      from { opacity: 0; transform: translateY(-8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* small responsive tweak */
+    @media (max-width:420px){
+      .box { padding: 22px; }
+      .icon { width: 68px; height: 68px; font-size: 30px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="box" role="alert" aria-live="polite">
+    <div class="icon">❌</div>
+
+    <h1>Invalid Credentials</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <p class="message">{{ message }}</p>
+        {% endfor %}
+      {% else %}
+        <p class="message">❌ Invalid User ID or Email! Please use your registered credentials.</p>
+      {% endif %}
+    {% endwith %}
+
+    <div class="small">Tip: double-check your User ID (BBxxxxxx) and the Gmail you used to sign up.</div>
+
+    <div class="actions">
+      <a class="btn btn-primary" href="{{ url_for('donate') }}">Try Again</a>
+      <a class="btn btn-secondary" href="{{ url_for('homee') }}">Go Home</a>
+    </div>
+  </div>
+</body>
+</html>
