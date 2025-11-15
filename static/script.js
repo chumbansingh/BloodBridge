@@ -212,3 +212,8 @@ function validateLogin() {
         closeModal();
       }
     };
+
+    function showDetails(donor) {
+  document.getElementById('modal').style.display = 'block';
+  document.getElementById('modalReceiverId').value = donor.user_id;
+}

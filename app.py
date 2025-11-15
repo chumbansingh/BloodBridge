@@ -52,7 +52,7 @@ def login():
         if user:
             session["user_id"] = user["user_id"]
             session["user_name"] = user["name"]
-            flash("Login successful!", "success")
+            #flash("Login successful!", "success")
             return redirect(url_for("homee"))  # or your home page route
         else:
             flash("Invalid Gmail or Password!", "danger")
@@ -117,7 +117,7 @@ def signup():
         # 🔹 Check if email already exists
         cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
         if cursor.fetchone():
-            flash("This Gmail is already registered.", "danger")
+           # flash("This Gmail is already registered.", "danger")
             return redirect(url_for("signup"))
 
         # 🔹 Insert user
@@ -270,7 +270,84 @@ def reject_donor(id):
     conn.commit()
     return redirect("/admin")
 
+#/////
+@app.route('/send_request', methods=['POST'])
+def send_request():
+    if 'user_id' not in session:
+        flash('Please log in first to send a request.')
+        return redirect('/login')
 
+    sender_id = session['user_id']
+    receiver_id = request.form['receiver_id']
+
+    cursor = conn.cursor()
+    cursor.execute("""
+        INSERT INTO notifications (sender_id, receiver_id, status)
+        VALUES (%s, %s, 'pending')
+    """, (sender_id, receiver_id))
+    conn.commit()
+    flash('Blood request sent successfully!')
+    return redirect('/donors')
+
+@app.route('/notifications')
+def notifications():
+    if 'user_id' not in session:
+        flash('Please log in first to view notifications.')
+        return redirect('/login')
+
+    user_id = session['user_id']
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("""
+        SELECT n.id, u.name AS sender_name, u.email AS sender_email, n.status, n.created_at
+        FROM notifications n
+        JOIN users u ON n.sender_id = u.user_id
+        WHERE n.receiver_id = %s
+        ORDER BY n.created_at DESC
+    """, (user_id,))
+    notifications = cursor.fetchall()
+
+    return render_template('notifications.html', notifications=notifications)
+@app.route('/update_request/<int:request_id>/<action>')
+def update_request(request_id, action):
+    if action not in ['accepted', 'rejected']:
+        flash('Invalid action.')
+        return redirect('/notifications')
+
+    cursor = conn.cursor()
+    cursor.execute("UPDATE notifications SET status=%s WHERE id=%s", (action, request_id))
+    conn.commit()
+
+    flash(f'Request {action} successfully!')
+    return redirect('/notifications')
+@app.route('/my_requests')
+def my_requests():
+    if 'user_id' not in session:
+        flash('Please log in first to view your requests.')
+        return redirect('/login')
+
+    user_id = session['user_id']
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("""
+        SELECT n.id, u.name AS receiver_name, u.email AS receiver_email, n.status, n.created_at
+        FROM notifications n
+        JOIN users u ON n.receiver_id = u.user_id
+        WHERE n.sender_id = %s
+        ORDER BY n.created_at DESC
+    """, (user_id,))
+    requests = cursor.fetchall()
+
+    return render_template('my_requests.html', requests=requests)
+@app.route('/delete_request/<int:request_id>', methods=['POST'])
+def delete_request(request_id):
+    if 'user_id' not in session:
+        flash('Please log in first.')
+        return redirect('/login')
+
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM notifications WHERE id = %s", (request_id,))
+    conn.commit()
+    flash('Request deleted successfully!')
+    return redirect(request.referrer)  # Goes back to the page you were on
 
 if __name__ == '__main__':
     app.run(debug=True)

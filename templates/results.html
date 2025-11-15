@@ -3,53 +3,84 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Blood Bridge</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='edit.css') }}">
+  <title>Matching Donors | Blood Bridge</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='donors.css') }}">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
-<body class="results-body">
-  <header>
-    <div class="container nav-container">
-      <a href="/" class="logo-link">
-      <div class="logo-group">
-        <img src="{{ url_for('static', filename='LOGO.png') }}" alt="logo" class="logo-img" />
-        <h1 class="logo-text">Blood Bridge</h1>
-      </div>
-      </a>
-      <nav>
-        <ul class="nav-links">
-          <li><a href="/" class="active">Home</a></li>
-          <li><a href="/donate">Donate</a></li>
-          <li><a href="/request">Request</a></li>
-          <li><a href="/about">About</a></li>
-          <li><a href="/contact">Contact</a></li>
-          <li><a href="/donors">Donors</a></li>
-          <li><a href="/admin">admin</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-<body>
-    <div class="result-container">
-        <h1>Matching Blood Donors</h1>
-        <p class="result-info">Showing donors for <strong>{{ blood_type }}</strong> near <strong>{{ location }}</strong></p>
 
-        {% if donors %}
-            <div class="donor-grid">
-                {% for donor in donors %}
-                    <div class="donor-card">
-                        <h2>{{ donor.name }}</h2>
-                        <p><strong>Blood Group:</strong> {{ donor.blood_type }}</p>
-                        <p><strong>Location:</strong> {{ donor.address }}</p>
-                        <p><strong>Phone:</strong> {{ donor.phone }}</p>
-                        <p><strong>Age:</strong> {{ donor.age }}</p>
-                        <p><strong>Times Donated:</strong> {{ donor.times_donated }}</p>
-                    </div>
-                {% endfor %}
-            </div>
-        {% else %}
-            <p class="no-results">No donors found matching your request.</p>
-        {% endif %}
+<body class="donors-body">
+
+<header>
+  <div class="container donors-nav-container">
+    <a href="/homee" class="donors-logo-link">
+      <div class="donors-logo-group">
+        <img src="{{ url_for('static', filename='LOGO.png') }}" alt="logo" class="donors-logo-img" />
+        <h1 class="donors-logo-text">Blood Bridge</h1>
+      </div>
+    </a>
+  </div>
+</header>
+
+<div class="result-container">
+  <h1>Matching Blood Donors</h1>
+  <p class="result-info">
+     Showing donors for <strong>{{ blood_type }}</strong> near <strong>{{ location }}</strong>
+  </p>
+
+  {% if donors %}
+    <div class="donors-list" id="donorList">
+      {% for donor in donors %}
+      <div class="donors-card"
+           onclick='showDetails(JSON.parse(`{{ donor | tojson | safe }}`))'>
+
+        <div class="donors-avatar">{{ donor.name[0] }}</div>
+        <p><strong>Name:</strong> {{ donor.name }}</p>
+        <p><strong>Blood Type:</strong> <span class="blood-badge">{{ donor.blood_type }}</span></p>
+        <p><strong>Location:</strong> {{ donor.address }}</p>
+
+      </div>
+      {% endfor %}
     </div>
+
+  {% else %}
+    <p class="no-data">No donors found matching your request.</p>
+  {% endif %}
+</div>
+
+
+<!-- ⭐ SAME MODAL AS DONOR PAGE -->
+<div id="modal" class="donors-modal">
+  <div class="donors-modal-content">
+    <span onclick="closeModal()" class="donors-close">&times;</span>
+
+    <h2>Donor Info</h2>
+    <p><strong>Full Name:</strong> <span id="modalName"></span></p>
+    <p><strong>Email:</strong> <span id="modalEmail"></span></p>
+    <p><strong>Phone:</strong> <span id="modalPhone"></span></p>
+    <p><strong>Blood Group:</strong> <span id="modalBlood"></span></p>
+    <p><strong>Location:</strong> <span id="modalAddress"></span></p>
+
+    <hr style="margin: 12px 0;">
+
+    <h3>Additional Info</h3>
+    <p><strong>Times Donated:</strong> <span id="modalTimes"></span></p>
+
+    <form method="POST" action="{{ url_for('send_request') }}">
+      <input type="hidden" name="receiver_id" id="modalReceiverId">
+      <button type="submit" class="btn-request">Request Blood</button>
+    </form>
+  </div>
+</div>
+
+
+<footer class="donors-footer">
+  <div class="container">
+    <p>&copy; 2025 Blood Bridge. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
 </body>
 </html>

@@ -79,9 +79,10 @@
         <p><strong>Times Donated:</strong> <span id="modalTimes"></span></p>
 
         <!-- Request Button -->
-        <form id="requestForm" method="POST">
-          <button type="submit" class="btn-request">Request Blood</button>
-        </form>
+        <form method="POST" action="{{ url_for('send_request') }}">
+  <input type="hidden" name="receiver_id" id="modalReceiverId">
+  <button type="submit" class="btn-request">Request Blood</button>
+</form>
       </div>
     </div>
 

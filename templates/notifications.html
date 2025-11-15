@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notifications | BloodBridge</title>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #fafafa;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #b30000;
+      margin: 25px 0;
+      font-size: 2rem;
+    }
+
+    table {
+      width: 90%;
+      margin: 25px auto;
+      border-collapse: collapse;
+      background: #fff;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 14px 12px;
+      text-align: center;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background-color: #b30000;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    tr:hover {
+      background-color: #f9f9f9;
+    }
+
+    .btn {
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      color: #fff;
+      cursor: pointer;
+      transition: 0.3s ease;
+      font-weight: 600;
+      text-decoration: none;
+      margin: 2px;
+      display: inline-block;
+    }
+
+    .btn-accept {
+      background: #28a745;
+    }
+
+    .btn-reject {
+      background: #dc3545;
+    }
+
+    .btn-delete {
+      background: #6c757d;
+    }
+
+    .btn:hover {
+      opacity: 0.85;
+    }
+
+    .status-pending {
+      color: orange;
+      font-weight: bold;
+    }
+
+    .status-accepted {
+      color: green;
+      font-weight: bold;
+    }
+
+    .status-rejected {
+      color: red;
+      font-weight: bold;
+    }
+
+    .no-data {
+      text-align: center;
+      margin: 40px 0;
+      font-size: 1.2rem;
+      color: #555;
+    }
+
+    form {
+      display: inline;
+    }
+  </style>
+</head>
+<body>
+  <h1>Blood Requests You Received</h1>
+
+  {% if notifications %}
+  <table>
+    <thead>
+      <tr>
+        <th>Requester Name</th>
+        <th>Requester Email</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for n in notifications %}
+      <tr>
+        <td>{{ n.sender_name }}</td>
+        <td>{{ n.sender_email }}</td>
+        <td>
+          <span class="status-{{ n.status }}">
+            {{ n.status|capitalize }}
+          </span>
+        </td>
+        <td>
+          {% if n.status == 'pending' %}
+            <a class="btn btn-accept" href="{{ url_for('update_request', request_id=n.id, action='accepted') }}">Accept</a>
+            <a class="btn btn-reject" href="{{ url_for('update_request', request_id=n.id, action='rejected') }}">Reject</a>
+          {% else %}
+            <em>No action needed</em>
+          {% endif %}
+          
+          <form action="{{ url_for('delete_request', request_id=n.id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this request?');">
+            <button type="submit" class="btn btn-delete">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="no-data">No new blood requests.</p>
+  {% endif %}
+</body>
+</html>

@@ -54,8 +54,14 @@ body.donors-body {
 .donors-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+
   gap: 25px;
   padding: 30px;
+}
+.result-container{
+    text-align: center;          /* centers the text */
+    width: 100%;
+    margin-top: 20px;
 }
 
 .donors-card {
