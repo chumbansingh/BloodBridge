@@ -274,7 +274,6 @@ def reject_donor(id):
 @app.route('/send_request', methods=['POST'])
 def send_request():
     if 'user_id' not in session:
-        flash('Please log in first to send a request.')
         return redirect('/login')
 
     sender_id = session['user_id']
@@ -286,8 +285,8 @@ def send_request():
         VALUES (%s, %s, 'pending')
     """, (sender_id, receiver_id))
     conn.commit()
-    flash('Blood request sent successfully!')
-    return redirect('/donors')
+
+    return redirect('/donors?msg=request_sent')
 
 @app.route('/notifications')
 def notifications():

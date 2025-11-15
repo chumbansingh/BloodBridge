@@ -7,6 +7,11 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='donors.css') }}">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
+{% if request.args.get('msg') == 'request_sent' %}
+<div class="msg-box">
+    Your blood request has been sent successfully!
+</div>
+{% endif %}
 <body class="donors-body">
   <div class="donors-page">
     <header>
