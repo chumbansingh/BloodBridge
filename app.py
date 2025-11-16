@@ -6,7 +6,7 @@ app.secret_key = 'supersecretkey'
 
 ADMIN_USERNAME = 'admin'
 ADMIN_PASSWORD = 'pass123'
-# MySQL connection
+
 conn = mysql.connector.connect(
     host="localhost",
     user="root",
@@ -14,7 +14,7 @@ conn = mysql.connector.connect(
     database="bloodbridge"
 )
 cursor = conn.cursor(dictionary=True)
-# 4.Admin Login Route
+
 @app.route('/admin-login', methods=['GET', 'POST'])
 def admin_login():
     if request.method == 'POST':
@@ -29,14 +29,14 @@ def admin_login():
     
     return render_template('admin_login.html')
 
-# login/signup
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         email = request.form["email"].strip()
         password = request.form["password"].strip()
 
-        # ✅ Backend validation
+
         if not re.match(r'^[a-zA-Z0-9._%+-]+@gmail\.com$', email):
             flash("Only valid Gmail addresses are allowed (e.g., yourname@gmail.com).", "danger")
             return redirect(url_for("login"))
@@ -45,7 +45,7 @@ def login():
             flash("Password format invalid.", "danger")
             return redirect(url_for("login"))
 
-        # ✅ Check credentials (changed usersignup → users)
+
         cursor.execute("SELECT * FROM users WHERE email = %s AND password = %s", (email, password))
         user = cursor.fetchone()
 
@@ -53,7 +53,7 @@ def login():
             session["user_id"] = user["user_id"]
             session["user_name"] = user["name"]
             #flash("Login successful!", "success")
-            return redirect(url_for("homee"))  # or your home page route
+            return redirect(url_for("homee"))  
         else:
             flash("Invalid Gmail or Password!", "danger")
             return redirect(url_for("login"))
@@ -61,24 +61,24 @@ def login():
     return render_template("login.html")
 @app.route("/homee")
 def homee():
-    # Ensure user is logged in
+
     if "user_id" not in session:
         flash("Please log in to continue.", "warning")
         return redirect(url_for("login"))
 
-    # Pass user data to the template
+
     return render_template(
         "homee.html",
         user_name=session.get("user_name"),
         user_id=session.get("user_id")
     )
 
-# --- Function to generate user ID ---
+
 def generate_user_id():
     cursor.execute("SELECT COUNT(*) FROM users")
     result = cursor.fetchone()
     
-    # handle empty table or dict-style cursor
+
     if result is None:
         count = 0
     elif isinstance(result, dict):
@@ -88,7 +88,7 @@ def generate_user_id():
         
     return f"BB{count + 1:05d}"
 
-# ✅ SIGNUP ROUTE
+
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
@@ -97,7 +97,7 @@ def signup():
         password = request.form["password"].strip()
         phone = request.form["phone"].strip()
 
-        # 🔹 Validation checks
+
         if not re.match(r"^[A-Za-z\s]+$", name):
             flash("Invalid name: only letters and spaces allowed.", "danger")
             return redirect(url_for("signup"))
@@ -114,13 +114,13 @@ def signup():
             flash("Phone number must be 10 digits.", "danger")
             return redirect(url_for("signup"))
 
-        # 🔹 Check if email already exists
+
         cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
         if cursor.fetchone():
            # flash("This Gmail is already registered.", "danger")
             return redirect(url_for("signup"))
 
-        # 🔹 Insert user
+
         user_id = generate_user_id()
         cursor.execute(
             "INSERT INTO users (user_id, name, email, password, phone) VALUES (%s, %s, %s, %s, %s)",
@@ -128,17 +128,17 @@ def signup():
         )
         conn.commit()
 
-        # ✅ After successful signup, render thank-you page
+
         return render_template("signupsuccessfull.html", user_id=user_id, name=name)
 
     return render_template("signup.html")
-# Home Page
+
 @app.route('/')
 def home():
     return render_template('home.html')
 
 
-# Donate Page
+
 @app.route("/donate", methods=["GET", "POST"])
 def donate():
     if request.method == "POST":
@@ -150,7 +150,7 @@ def donate():
         phone = request.form["phone"].strip()
         age = request.form["age"].strip()
 
-        # ✅ Step 1: Verify if user_id and email exist together in users table
+
         cursor.execute("SELECT * FROM users WHERE user_id = %s AND email = %s", (user_id, email))
         user = cursor.fetchone()
 
@@ -159,25 +159,25 @@ def donate():
             return render_template("invalid.html")
 
 
-        # ✅ Step 2: Check for duplicate donation
+
         cursor.execute("SELECT * FROM donors WHERE user_id = %s", (user_id,))
         if cursor.fetchone():
             #flash("⚠️ You’ve already submitted a donation request! Please wait for admin approval.", "warning")
             return render_template("duplicate.html")
 
 
-        # ✅ Step 3: Insert donor info
+
         cursor.execute("""
             INSERT INTO donors (user_id, name, email, address, blood_type, phone, age, times_donated, status)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
         """, (user_id, name, email, address, blood_type, phone, age, 0, "pending"))
         conn.commit()
 
-        # ✅ Step 4: Redirect to a nice thank-you page
+
         return render_template("thankyou.html", email=email, user_id=user_id)
 
     return render_template("donate.html")
-#request Blood Page
+
 @app.route('/request', methods=['GET', 'POST'])
 def request_blood():
     if request.method == 'POST':
@@ -189,7 +189,7 @@ def request_blood():
         urgency = request.form['urgency']
         contact = request.form['contact']
 
-        # ✅ Verify user ID and email
+
         cursor.execute("SELECT * FROM users WHERE user_id = %s AND email = %s", (user_id, email))
         user = cursor.fetchone()
 
@@ -198,7 +198,7 @@ def request_blood():
             return render_template("notuser.html")
 
 
-        # ✅ Search matching donors
+
         cursor.execute("""
             SELECT * FROM donors
             WHERE blood_type = %s
@@ -211,12 +211,12 @@ def request_blood():
         return render_template("results.html", donors=donors, blood_type=blood_type, location=location)
 
     return render_template("request.html")
-# About Page
+
 @app.route('/about')
 def about():
     return render_template('about.html')
 
-# Contact Page
+
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     if request.method == 'POST':
@@ -230,14 +230,14 @@ def contact():
         
     return render_template('contact.html')
 
-# Donor List Page (Approved wala Donors matra)
+
 @app.route('/donors')
 def donor_list():
     cursor.execute("SELECT * FROM donors WHERE status='approved'")
     donors = cursor.fetchall()
     return render_template("donors.html", donors=donors)
 
-# Admin Panel Route
+
 @app.route("/admin")
 def admin_panel():
     if not session.get('admin_logged_in'):
@@ -250,27 +250,27 @@ def admin_panel():
     contact_messages = cursor.fetchall()
 
     return render_template("admin.html", pending_donors=pending_donors, messages=contact_messages)
-#for Admin Logout
+
 @app.route('/logout')
 def logout():
     session.pop('admin_logged_in', None)
     return redirect('/admin-login')
 
-# Approve Donor
+
 @app.route("/approve/<int:id>", methods=["POST"])
 def approve_donor(id):
     cursor.execute("UPDATE donors SET status='approved' WHERE id=%s", (id,))
     conn.commit()
     return redirect("/admin")
 
-# Reject Donor
+
 @app.route("/reject/<int:id>", methods=["POST"])
 def reject_donor(id):
     cursor.execute("UPDATE donors SET status='rejected' WHERE id=%s", (id,))
     conn.commit()
     return redirect("/admin")
 
-#/////
+
 @app.route('/send_request', methods=['POST'])
 def send_request():
     if 'user_id' not in session:
@@ -346,7 +346,7 @@ def delete_request(request_id):
     cursor.execute("DELETE FROM notifications WHERE id = %s", (request_id,))
     conn.commit()
     flash('Request deleted successfully!')
-    return redirect(request.referrer)  # Goes back to the page you were on
+    return redirect(request.referrer)  
 
 if __name__ == '__main__':
     app.run(debug=True)
