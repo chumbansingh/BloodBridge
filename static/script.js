@@ -1,7 +1,6 @@
-/*about*/
-// Wait for full DOM load
+
 document.addEventListener('DOMContentLoaded', function () {
-  // Smooth scroll for nav links
+
   const navLinks = document.querySelectorAll('.nav-links a');
 
   navLinks.forEach(link => {
@@ -14,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // Highlight active nav link
+
   const currentPath = window.location.pathname;
   navLinks.forEach(link => {
     if (link.getAttribute('href') === currentPath) {
@@ -22,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // Fade-in animation for team section
+
   const teamMembers = document.querySelectorAll('.team-member');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -38,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
     observer.observe(member);
   });
 
-  // Eligibility checker (Future scope idea)
+
 
   const eligibility = localStorage.getItem('lastDonationDate');
   if (eligibility) {
@@ -51,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 });
-/*3photos*/
+
 document.addEventListener('DOMContentLoaded', () => {
   const cards = document.querySelectorAll('.card');
 
@@ -59,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('show');
-        observer.unobserve(entry.target); // trigger only once
+        observer.unobserve(entry.target);
       }
     });
   }, {
@@ -70,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
     observer.observe(card);
   });
 });
-// --- Donor Page Script ---
+
 
 function showDetails(donor) {
   document.getElementById("modalName").textContent = donor.name;
@@ -115,7 +114,7 @@ function searchDonors() {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add("visible");
-          observer.unobserve(entry.target); // Run once
+          observer.unobserve(entry.target); 
         }
       });
     });
@@ -124,7 +123,7 @@ function searchDonors() {
     animatedElements.forEach(el => observer.observe(el));
   });
   
-//training my signup/in form
+
 function validateForm() {
   const name = document.getElementById("username").value.trim();
   const email = document.getElementById("email").value.trim();
@@ -132,35 +131,35 @@ function validateForm() {
   const phone = document.getElementById("phone").value.trim();
   const errorMsg = document.getElementById("error-message");
 
-  // ✅ 1. Name validation (only letters & spaces)
+
   const nameRegex = /^[A-Za-z\s]+$/;
   if (!nameRegex.test(name)) {
     errorMsg.textContent = "Name can only contain alphabets and spaces.";
     return false;
   }
 
-  // ✅ 2. Email validation
+
 const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
   if (!emailRegex.test(email)) {
     errorMsg.textContent = "Enter a valid email (example@gmail.com).";
     return false;
   }
 
-  // ✅ 3. Password validation (min 8 chars, 1 uppercase, 1 special, 1 digit)
+
   const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
   if (!passwordRegex.test(password)) {
     errorMsg.textContent = "Password must be 8+ chars, include 1 uppercase, 1 number, and 1 special character.";
     return false;
   }
 
-  // ✅ 4. Phone validation (10 digits only)
+
   const phoneRegex = /^[0-9]{10}$/;
   if (!phoneRegex.test(phone)) {
     errorMsg.textContent = "Phone number must be exactly 10 digits.";
     return false;
   }
 
-  // ✅ All good
+
   errorMsg.textContent = "";
   return true;
 }
@@ -170,25 +169,25 @@ function validateLogin() {
   const password = document.getElementById("login-password").value.trim();
   const errorMsg = document.getElementById("login-error");
 
-  // ✅ 1. Validate email format
+
   const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
   if (!emailRegex.test(email)) {
     errorMsg.textContent = "Enter a valid email (example@gmail.com).";
     return false;
   }
 
-  // ✅ 2. Validate password format (same rule as signup)
+
   const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
   if (!passwordRegex.test(password)) {
     errorMsg.textContent = "Password must have 8+ chars, 1 uppercase, 1 number, and 1 special character.";
     return false;
   }
 
-  // ✅ All good
+
   errorMsg.textContent = "";
   return true;
 }
-    // --- Modal handling ---
+
     function showDetails(donor) {
       document.getElementById("modal").style.display = "flex";
       document.getElementById("modalName").textContent = donor.name;
@@ -198,7 +197,7 @@ function validateLogin() {
       document.getElementById("modalAddress").textContent = donor.address;
       document.getElementById("modalTimes").textContent = donor.times_donated || 0;
 
-      // Set form action dynamically
+
       const form = document.getElementById("requestForm");
       form.action = `/request_blood/${donor.user_id}`;
     }

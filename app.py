@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, session, flash , url_for 
 
-import mysql.connector ,random, string , re 
+import mysql.connector ,re 
 app = Flask(__name__)
 app.secret_key = 'supersecretkey'
 
@@ -117,7 +117,7 @@ def signup():
 
         cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
         if cursor.fetchone():
-           # flash("This Gmail is already registered.", "danger")
+            flash("This Gmail is already registered.", "danger")
             return redirect(url_for("signup"))
 
 
@@ -155,14 +155,14 @@ def donate():
         user = cursor.fetchone()
 
         if not user:
-            #flash("❌ Invalid User ID or Email! Please use your registered credentials.", "danger")
+            #flash(" Invalid User ID or Email! Please use your registered credentials.", "danger")
             return render_template("invalid.html")
 
 
 
         cursor.execute("SELECT * FROM donors WHERE user_id = %s", (user_id,))
         if cursor.fetchone():
-            #flash("⚠️ You’ve already submitted a donation request! Please wait for admin approval.", "warning")
+            #flash(" You’ve already submitted a donation request! Please wait for admin approval.", "warning")
             return render_template("duplicate.html")
 
 
@@ -207,7 +207,7 @@ def request_blood():
         """, (blood_type, f"%{location}%"))
         donors = cursor.fetchall()
 
-        #flash("✅ Your request has been submitted successfully.", "success")
+
         return render_template("results.html", donors=donors, blood_type=blood_type, location=location)
 
     return render_template("request.html")
@@ -306,6 +306,7 @@ def notifications():
     notifications = cursor.fetchall()
 
     return render_template('notifications.html', notifications=notifications)
+
 @app.route('/update_request/<int:request_id>/<action>')
 def update_request(request_id, action):
     if action not in ['accepted', 'rejected']:
